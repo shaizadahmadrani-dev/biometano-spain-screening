@@ -1,0 +1,79 @@
+{
+  "method_version": "sergio-national-v49-evidence",
+  "as_of": "2026-07-10",
+  "created_at": "2026-07-10T14:57:31+00:00",
+  "scope": {
+    "national_5km": "21.519 celdas terrestres España; cobertura nacional de screening, no parcelas",
+    "refined_1km": "30.450 celdas dentro del universo candidato v48; no cobertura nacional exhaustiva"
+  },
+  "target": "prioridad para adquirir evidencia de prefactibilidad",
+  "not_claimed": [
+    "probabilidad",
+    "viabilidad",
+    "permiso",
+    "capacidad de conexión"
+  ],
+  "rules": {
+    "nitrates": "riesgo de digestato y revisión; no veto universal de emplazamiento",
+    "hard_veto": "solo filtros físicos heredados no relacionados con nitratos",
+    "prefeasibility": "estado separado; todos los gates críticos deben estar verificados"
+  },
+  "inputs": {
+    "processed/biometano_grid5km_spain_curated_v4_attributes.parquet": "cffe2aa2f3353248f79c502f1be9fa3361c2bcc2eb9b7b96346bb49616f7dac6",
+    "processed/biometano_grid5km_spain_curated_v4_points.geoparquet": "3838889e1df40cb2e72eae43d090713434cb7f66355d00e2d613db218f18e3ac",
+    "processed/biometano_spain_model_benchmark_v4_scores.parquet": "48fd2a669a686e5ce3f7fd14b3ef4daa928b2aaa1d1553893e6726b5f7ad7702",
+    "raw/gisco/NUTS_RG_20M_2024_3035.geojson": "f3682393649e9a692439c4a9b2d7bc31ab42e3aff4c1671ab88cd2bcb776f5cb",
+    "sergio_biometano_app/data/sergio_cells.parquet": "d5d7315681682a524f186eab002ca928270d9e53c41ec72c798bf533817ac57f",
+    "processed/plants_spain_reconciled_operating_v3.csv": "5819a74b6ca5e29d263c0c7a9b54c5facb866c3237d87a6e6dc1727599b61263"
+  },
+  "outputs": {
+    "sergio_biometano_app/data/sergio_cells_v49_national_5km.parquet": "ce93e1bf4ad9d229eeba8e81ec776334daafdf63e52962da9aa793d78fa83cfa",
+    "processed/biometano_v49_national_5km_screening.csv": "162ad8b4e99281ede4a70f9ac948a6804aa8b0565767df95fa5eac8b9d901758",
+    "sergio_biometano_app/data/sergio_cells_v49_refined_1km.parquet": "6adaa8704a0c8da74cf57769c46ee4878af4aadd27e4c6b39d30ce9ddbcdff0f",
+    "processed/biometano_v49_refined_1km_screening.csv": "3f2713787e8d5aec47493bafb06871cadef99b25caac7f2d037bdeef503f3986",
+    "processed/biometano_v49_refined_diverse_top25_by_province.csv": "e349680a3a0d875878975041cab9e152cb2ca9a4627addc3e3e1ccabe9eed162"
+  },
+  "metrics": {
+    "national_5km": {
+      "rows": 21519,
+      "unique_cells": 21519,
+      "status_counts": {
+        "prioridad alta de investigación": 3192,
+        "prioridad media de investigación": 4348,
+        "prioridad baja de investigación": 13979,
+        "descartado por filtro físico": 0
+      },
+      "screening_completeness_mean": 0.6230133835215391
+    },
+    "refined_1km": {
+      "rows": 30450,
+      "unique_cells": 30450,
+      "status_counts": {
+        "prioridad alta de investigación": 4818,
+        "prioridad media de investigación": 11138,
+        "prioridad baja de investigación": 13379,
+        "descartado por filtro físico": 1115
+      },
+      "hard_physical_exclusions": 1115,
+      "nitrate_digestate_high": 15830,
+      "nitrate_only_hard_vetoes": 0,
+      "nearest_plant_complete_share": 1.0,
+      "prefeasible_rows": 0
+    },
+    "diverse_top25_rows": 769
+  },
+  "source_vintages": {
+    "land_cover": "ESA WorldCover 2021",
+    "roads": "CNIG/IGN BTN100 2021",
+    "electricity_visual_layer": "CNIG/IGN BTN100 2015; no capacidad",
+    "gas_corridor": "GGIT/OSM heterogéneo; no capacidad",
+    "operating_plants": "Sedigas/Gasnam reconciliado enero 2026",
+    "nitrates": "MITECO 2025"
+  },
+  "limitations": [
+    "Las señales de suministro nacionales son proxies macro.",
+    "La cobertura 5 km no sustituye el refinamiento parcelario.",
+    "La distancia a infraestructura no acredita capacidad.",
+    "No existe gold set ni probabilidad calibrada."
+  ]
+}

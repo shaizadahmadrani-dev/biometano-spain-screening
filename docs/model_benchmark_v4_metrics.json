@@ -1,0 +1,286 @@
+{
+  "created_at_utc": "2026-07-03T14:16:15.139094+00:00",
+  "label": "label_has_biomethane_mediterranean_weighted_v4",
+  "weight": "sample_weight_mediterranean_v4",
+  "features": [
+    "LAND_PC",
+    "TOT_P_2021",
+    "DIST_COAST",
+    "DIST_BORD",
+    "bovine_lsu_2023",
+    "poultry_lsu_2023",
+    "arable_main_area_ths_ha_2024",
+    "cereals_production_ths_t_2024",
+    "manure_tonnes_2020_mnr_exp_lq_sl",
+    "manure_tonnes_2020_mnr_exp_so",
+    "wwtp_count_cell",
+    "wwtp_capacity_sum_pe_cell",
+    "wwtp_load_entering_sum_pe_cell",
+    "wwtp_wastewater_treated_sum_cell",
+    "nearest_wwtp_dist_km",
+    "nearest_wwtp_capacity_pe",
+    "nearest_wwtp_load_entering_pe",
+    "bio1_annual_mean_temp_c",
+    "bio5_max_temp_warmest_month_c",
+    "bio6_min_temp_coldest_month_c",
+    "bio12_annual_precip_mm",
+    "bio15_precipitation_seasonality",
+    "nearest_ggit_operating_gas_pipeline_dist_km_mediterranean_v4",
+    "worldcover2021_share_tree_cover_sample25",
+    "worldcover2021_share_shrubland_sample25",
+    "worldcover2021_share_grassland_sample25",
+    "worldcover2021_share_cropland_sample25",
+    "worldcover2021_share_built_up_sample25",
+    "worldcover2021_share_bare_sparse_vegetation_sample25",
+    "worldcover2021_share_permanent_water_sample25",
+    "worldcover2021_share_herbaceous_wetland_sample25"
+  ],
+  "training_countries": [
+    "ES",
+    "FR",
+    "IT"
+  ],
+  "spain_positive_cells": 26,
+  "models": {
+    "logistic_regression": {
+      "label": "Logistic Regression",
+      "explanation": "Baseline lineal, molt explicable; dona probabilitats calibrables.",
+      "full_fit": {
+        "training_scope": "ES/FR/IT calibration model",
+        "training_countries": [
+          "ES",
+          "FR",
+          "IT"
+        ],
+        "train_rows": 59944,
+        "train_positive_cells_unweighted": 935,
+        "train_positive_weight_sum": 851.05,
+        "train_negative_weight_sum": 2950.4500000000007,
+        "positive_cells_by_tier": {
+          "strong": 781,
+          "proxy_medium": 154
+        }
+      },
+      "transfer_fit": {
+        "training_scope": "FR/IT transfer to Spain",
+        "training_countries": [
+          "FR",
+          "IT"
+        ],
+        "train_rows": 38767,
+        "train_positive_cells_unweighted": 909,
+        "train_positive_weight_sum": 825.05,
+        "train_negative_weight_sum": 1892.8999999999996,
+        "positive_cells_by_tier": {
+          "strong": 755,
+          "proxy_medium": 154
+        }
+      },
+      "spain_in_sample_calibration": {
+        "spain_average_precision": 0.029553828385069578,
+        "spain_roc_auc": 0.836587962172433,
+        "spain_topk": {
+          "top_10_positives": 1,
+          "top_25_positives": 1,
+          "top_50_positives": 1,
+          "top_100_positives": 5,
+          "top_250_positives": 7
+        }
+      },
+      "no_spain_transfer_eval_on_spain": {
+        "spain_average_precision": 0.005890503601186971,
+        "spain_roc_auc": 0.745047211797318,
+        "spain_topk": {
+          "top_10_positives": 0,
+          "top_25_positives": 0,
+          "top_50_positives": 0,
+          "top_100_positives": 1,
+          "top_250_positives": 3
+        }
+      }
+    },
+    "random_forest": {
+      "label": "Random Forest",
+      "explanation": "Ensemble d'arbres; captura no-linearitats i interaccions, menys transparent que logística.",
+      "full_fit": {
+        "training_scope": "ES/FR/IT calibration model",
+        "training_countries": [
+          "ES",
+          "FR",
+          "IT"
+        ],
+        "train_rows": 59944,
+        "train_positive_cells_unweighted": 935,
+        "train_positive_weight_sum": 851.05,
+        "train_negative_weight_sum": 2950.4500000000007,
+        "positive_cells_by_tier": {
+          "strong": 781,
+          "proxy_medium": 154
+        }
+      },
+      "transfer_fit": {
+        "training_scope": "FR/IT transfer to Spain",
+        "training_countries": [
+          "FR",
+          "IT"
+        ],
+        "train_rows": 38767,
+        "train_positive_cells_unweighted": 909,
+        "train_positive_weight_sum": 825.05,
+        "train_negative_weight_sum": 1892.8999999999996,
+        "positive_cells_by_tier": {
+          "strong": 755,
+          "proxy_medium": 154
+        }
+      },
+      "spain_in_sample_calibration": {
+        "spain_average_precision": 1.0,
+        "spain_roc_auc": 1.0,
+        "spain_topk": {
+          "top_10_positives": 10,
+          "top_25_positives": 25,
+          "top_50_positives": 26,
+          "top_100_positives": 26,
+          "top_250_positives": 26
+        }
+      },
+      "no_spain_transfer_eval_on_spain": {
+        "spain_average_precision": 0.013624410553538248,
+        "spain_roc_auc": 0.7417701790015586,
+        "spain_topk": {
+          "top_10_positives": 1,
+          "top_25_positives": 1,
+          "top_50_positives": 2,
+          "top_100_positives": 2,
+          "top_250_positives": 3
+        }
+      }
+    },
+    "gradient_boosting": {
+      "label": "Gradient Boosting",
+      "explanation": "Arbres seqüencials; sovint fort en dades tabulars, però pot sobreajustar si els labels són febles.",
+      "full_fit": {
+        "training_scope": "ES/FR/IT calibration model",
+        "training_countries": [
+          "ES",
+          "FR",
+          "IT"
+        ],
+        "train_rows": 59944,
+        "train_positive_cells_unweighted": 935,
+        "train_positive_weight_sum": 851.05,
+        "train_negative_weight_sum": 2950.4500000000007,
+        "positive_cells_by_tier": {
+          "strong": 781,
+          "proxy_medium": 154
+        }
+      },
+      "transfer_fit": {
+        "training_scope": "FR/IT transfer to Spain",
+        "training_countries": [
+          "FR",
+          "IT"
+        ],
+        "train_rows": 38767,
+        "train_positive_cells_unweighted": 909,
+        "train_positive_weight_sum": 825.05,
+        "train_negative_weight_sum": 1892.8999999999996,
+        "positive_cells_by_tier": {
+          "strong": 755,
+          "proxy_medium": 154
+        }
+      },
+      "spain_in_sample_calibration": {
+        "spain_average_precision": 0.19327922103486836,
+        "spain_roc_auc": 0.9708863610766978,
+        "spain_topk": {
+          "top_10_positives": 4,
+          "top_25_positives": 6,
+          "top_50_positives": 7,
+          "top_100_positives": 8,
+          "top_250_positives": 13
+        }
+      },
+      "no_spain_transfer_eval_on_spain": {
+        "spain_average_precision": 0.007675764493815801,
+        "spain_roc_auc": 0.8070547031960152,
+        "spain_topk": {
+          "top_10_positives": 0,
+          "top_25_positives": 1,
+          "top_50_positives": 1,
+          "top_100_positives": 1,
+          "top_250_positives": 3
+        }
+      }
+    },
+    "linear_svm": {
+      "label": "Linear SVM",
+      "explanation": "Marge lineal robust per ranking; no dona probabilitat directa sense calibració extra.",
+      "full_fit": {
+        "training_scope": "ES/FR/IT calibration model",
+        "training_countries": [
+          "ES",
+          "FR",
+          "IT"
+        ],
+        "train_rows": 59944,
+        "train_positive_cells_unweighted": 935,
+        "train_positive_weight_sum": 851.05,
+        "train_negative_weight_sum": 2950.4500000000007,
+        "positive_cells_by_tier": {
+          "strong": 781,
+          "proxy_medium": 154
+        }
+      },
+      "transfer_fit": {
+        "training_scope": "FR/IT transfer to Spain",
+        "training_countries": [
+          "FR",
+          "IT"
+        ],
+        "train_rows": 38767,
+        "train_positive_cells_unweighted": 909,
+        "train_positive_weight_sum": 825.05,
+        "train_negative_weight_sum": 1892.8999999999996,
+        "positive_cells_by_tier": {
+          "strong": 755,
+          "proxy_medium": 154
+        }
+      },
+      "spain_in_sample_calibration": {
+        "spain_average_precision": 0.023665783598494885,
+        "spain_roc_auc": 0.8473854582577957,
+        "spain_topk": {
+          "top_10_positives": 1,
+          "top_25_positives": 1,
+          "top_50_positives": 2,
+          "top_100_positives": 2,
+          "top_250_positives": 7
+        }
+      },
+      "no_spain_transfer_eval_on_spain": {
+        "spain_average_precision": 0.008946856335831433,
+        "spain_roc_auc": 0.7837376339241923,
+        "spain_topk": {
+          "top_10_positives": 0,
+          "top_25_positives": 0,
+          "top_50_positives": 0,
+          "top_100_positives": 1,
+          "top_250_positives": 6
+        }
+      }
+    }
+  },
+  "warnings": [
+    "Spain in-sample calibration is not independent validation.",
+    "No-Spain transfer to Spain is the honest comparison anchor.",
+    "Italy is proxy_medium from OSM; Greece is not trained because coverage is too sparse.",
+    "Unlabeled cells are weak negatives, not proven true negatives.",
+    "Linear SVM scores are margins, not calibrated probabilities."
+  ],
+  "best_by_transfer_ap": "Random Forest",
+  "best_by_transfer_top250": "Linear SVM",
+  "best_by_transfer_auc": "Gradient Boosting",
+  "champion_selection": "none",
+  "recommended_reading": "No hi ha guanyador net. Random Forest té la millor AP de transferència, Linear SVM recupera més positius al top-250, i Gradient Boosting té millor ROC AUC. La recomanació defensable és auditar els top candidats i els filtres territorials, no triar un champion final."
+}

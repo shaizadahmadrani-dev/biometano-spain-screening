@@ -1,0 +1,170 @@
+{
+  "url": "http://127.0.0.1:8527",
+  "timestamp": "2026-07-10T15:20:42.359Z",
+  "summary": {
+    "checks": 11,
+    "passed": 11,
+    "failed": 0,
+    "criticalFailed": 0
+  },
+  "checks": [
+    {
+      "name": "the application loads without browser runtime errors",
+      "passed": true,
+      "evidence": {
+        "title": "Explorador nacional de biometano",
+        "runtimeErrors": []
+      },
+      "severity": "critical"
+    },
+    {
+      "name": "sidebar labels and filter placeholders meet WCAG AA contrast",
+      "passed": true,
+      "evidence": [
+        {
+          "selector": "[data-testid=\"stSidebar\"] label",
+          "pseudo": null,
+          "foreground": "rgb(220, 233, 226)",
+          "background": "rgb(13, 23, 29)",
+          "ratio": 14.51
+        },
+        {
+          "selector": "[data-testid=\"stSidebar\"] input[aria-label=\"Celda, provincia o texto\"]",
+          "pseudo": null,
+          "foreground": "rgb(231, 240, 235)",
+          "background": "rgb(17, 26, 34)",
+          "ratio": 15.12
+        },
+        {
+          "selector": "[data-testid=\"stSidebar\"] input[aria-label=\"Celda, provincia o texto\"]",
+          "pseudo": "::placeholder",
+          "foreground": "rgb(145, 165, 155)",
+          "background": "rgb(17, 26, 34)",
+          "ratio": 6.75
+        },
+        {
+          "selector": "[data-testid=\"stSidebar\"] input[aria-label=\"Capas disponibles\"]",
+          "pseudo": null,
+          "foreground": "rgb(231, 240, 235)",
+          "background": "rgb(17, 26, 34)",
+          "ratio": 15.12
+        },
+        {
+          "selector": "[data-testid=\"stSidebar\"] input[aria-label=\"Capas disponibles\"] + div",
+          "pseudo": null,
+          "foreground": "rgb(231, 240, 235)",
+          "background": "rgb(17, 26, 34)",
+          "ratio": 15.12
+        },
+        {
+          "selector": "text=Selecciona capas",
+          "foreground": "rgb(231, 240, 235)",
+          "background": "rgb(17, 26, 34)",
+          "ratio": 15.12
+        }
+      ],
+      "severity": "critical"
+    },
+    {
+      "name": "dark map is the default and its tiles load",
+      "passed": true,
+      "evidence": {
+        "darkChecked": true,
+        "tileSample": [
+          "https://d.basemaps.cartocdn.com/dark_all/5/15/12.png",
+          "https://a.basemaps.cartocdn.com/dark_all/5/15/13.png",
+          "https://c.basemaps.cartocdn.com/dark_all/5/14/12.png"
+        ]
+      },
+      "severity": "critical"
+    },
+    {
+      "name": "satellite basemap can be activated",
+      "passed": true,
+      "evidence": [
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/12/15",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/11/15",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/12/14",
+        "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/5/12/16"
+      ],
+      "severity": "critical"
+    },
+    {
+      "name": "topographic relief basemap can be activated",
+      "passed": true,
+      "evidence": [
+        "https://a.tile.opentopomap.org/5/15/12.png",
+        "https://c.tile.opentopomap.org/5/15/11.png",
+        "https://c.tile.opentopomap.org/5/14/12.png",
+        "https://b.tile.opentopomap.org/5/16/12.png"
+      ],
+      "severity": "critical"
+    },
+    {
+      "name": "screening markers remain visible across basemaps",
+      "passed": true,
+      "evidence": {
+        "leafletInteractiveElements": 250
+      },
+      "severity": "critical"
+    },
+    {
+      "name": "province filter is interactive in the real browser",
+      "passed": true,
+      "evidence": "Selected Badajoz. Provincia",
+      "severity": "critical"
+    },
+    {
+      "name": "Natura 2000, built-up and feedstock overlays activate in the browser",
+      "passed": true,
+      "evidence": [
+        " Oscuro (estándar)",
+        " Satélite con relieve",
+        " Topográfico con relieve",
+        " Celdas del screening",
+        " Natura 2000",
+        " Suelo construido (proxy WorldCover)",
+        " Materia prima alta (proxy macro)"
+      ],
+      "severity": "critical"
+    },
+    {
+      "name": "CSV and PDF controls download non-empty valid files",
+      "passed": true,
+      "evidence": {
+        "csv": {
+          "filename": "sergio_biometano_comparacion.csv",
+          "bytes": 3226,
+          "prefix": "ï»¿cell_"
+        },
+        "pdf": {
+          "filename": "sergio_CRS3035RES5000mN1915000E2850000.pdf",
+          "bytes": 4072,
+          "prefix": "%PDF-1.4"
+        }
+      },
+      "severity": "critical"
+    },
+    {
+      "name": "methodology and critical-audit sections are present",
+      "passed": true,
+      "evidence": {
+        "methodology": 1,
+        "audit": 1
+      },
+      "severity": "major"
+    },
+    {
+      "name": "mobile layout has no material horizontal overflow",
+      "passed": true,
+      "evidence": {
+        "innerWidth": 430,
+        "scrollWidth": 430,
+        "bodyScrollWidth": 430,
+        "mobileErrors": []
+      },
+      "severity": "critical"
+    }
+  ],
+  "runtimeErrors": []
+}

@@ -1,0 +1,7 @@
+streamlit==1.42.2
+folium==0.19.5
+streamlit-folium==0.24.0
+pandas==2.2.3
+pyarrow==19.0.1
+reportlab==4.3.1
+
