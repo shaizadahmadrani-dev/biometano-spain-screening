@@ -6,7 +6,7 @@ It combines a Mediterranean classification benchmark with a two-scale territoria
 
 - **5 km:** national screening across 21,519 land cells.
 - **1 km:** refined review across 30,450 cells inside the previously prioritised universe.
-- **Interactive app:** map, filters, evidence, physical exclusions, scenario weights and exports.
+- **Interactive app:** map, filters, evidence, physical exclusions, scenario weights and point reports.
 - **Model benchmark:** Logistic Regression, Random Forest, Gradient Boosting and Linear SVM.
 
 > **Important:** the score is not a probability and the cells are not confirmed sites. The system ranks areas for investigation; it does not confirm land ownership, planning permission, substrate contracts, gas/electric capacity, environmental approval or project economics.
@@ -24,6 +24,12 @@ streamlit run sergio_biometano_app/app.py
 ```
 
 The repository includes the compact v49 snapshots and the simplified GeoJSON layers required by the app. Internet access is needed for the remote base maps and the official SNCZI flood service.
+
+After selecting a cell, the **Exportaciones** section can download a comparison
+CSV, a one-page summary or a four-section detailed PDF. The detailed report
+records coordinates, screening evidence, technical proxies, unresolved
+prefactibility gates, source vintages and limitations. It is a review checklist,
+not a cadastral, engineering, permitting or investment dossier.
 
 ## Model benchmark
 

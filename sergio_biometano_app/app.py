@@ -22,6 +22,7 @@ try:
     from sergio_biometano_app.src.exports import csv_bytes, pdf_bytes
     from sergio_biometano_app.src.filters import comparison_table, filter_cells
     from sergio_biometano_app.src.map_view import build_map
+    from sergio_biometano_app.src.point_reports import point_report_pdf_bytes, safe_point_report_filename
     from sergio_biometano_app.src.scenarios import SCENARIO_WEIGHTS, score_scenario
 except ModuleNotFoundError:
     # The handoff ZIP can be extracted under any folder name.
@@ -31,6 +32,7 @@ except ModuleNotFoundError:
     from src.exports import csv_bytes, pdf_bytes
     from src.filters import comparison_table, filter_cells
     from src.map_view import build_map
+    from src.point_reports import point_report_pdf_bytes, safe_point_report_filename
     from src.scenarios import SCENARIO_WEIGHTS, score_scenario
 
 DATA_DIR = APP_DIR / "data"
@@ -496,23 +498,32 @@ def main() -> None:
     st.subheader("Exportaciones")
     export_rows = cells[cells["cell_id"].astype(str).isin(compare_ids or [selected_id])]
     export_records = [_cell_record(row) for _, row in export_rows.iterrows()]
-    e1, e2 = st.columns(2)
+    selected_record = _cell_record(selected)
+    snapshot = summarize_cell(selected_record)
+    source_lines = [f"{key}: {value}" for key, value in manifest.get("source_vintages", {}).items()]
+    caveats = [
+        "La prioridad v49 ordena dónde adquirir evidencia; no es probabilidad, viabilidad ni autorización.",
+        "La cobertura 5 km es nacional; el refinamiento 1 km solo cubre el universo previamente priorizado.",
+        "Las zonas vulnerables a nitratos exigen revisar el plan de digestato; no son un veto universal.",
+        "La proximidad a gas o electricidad no demuestra capacidad disponible.",
+    ]
+    e1, e2, e3 = st.columns(3)
     with e1:
         st.download_button("Descargar CSV", data=csv_bytes(export_records), file_name="sergio_biometano_comparacion.csv", mime="text/csv")
     with e2:
-        snapshot = summarize_cell(_cell_record(selected))
-        source_lines = [f"{key}: {value}" for key, value in manifest.get("source_vintages", {}).items()]
-        caveats = [
-            "La prioridad v49 ordena dónde adquirir evidencia; no es probabilidad, viabilidad ni autorización.",
-            "La cobertura 5 km es nacional; el refinamiento 1 km solo cubre el universo previamente priorizado.",
-            "Las zonas vulnerables a nitratos exigen revisar el plan de digestato; no son un veto universal.",
-            "La proximidad a gas o electricidad no demuestra capacidad disponible.",
-        ]
         st.download_button(
-            "Descargar ficha PDF",
+            "Ficha breve PDF",
             data=pdf_bytes(snapshot, sources=source_lines, caveats=caveats),
             file_name=f"sergio_{selected_id}.pdf",
             mime="application/pdf",
+        )
+    with e3:
+        st.download_button(
+            "Informe detallado PDF",
+            data=point_report_pdf_bytes(selected_record, manifest),
+            file_name=safe_point_report_filename(selected_id),
+            mime="application/pdf",
+            help="Informe multipágina del punto seleccionado con indicadores, gates, fuentes y límites.",
         )
     with st.expander("Metodología y fuentes"):
         st.markdown("""**Qué significa:** v49 combina una cobertura nacional de 5 km con un refinamiento de 1 km limitado al universo priorizado. El score es un ranking relativo para decidir dónde investigar primero; no es probabilidad ni declaración de viabilidad.\n\n**Separación de decisiones:** prioridad, calidad de evidencia, prefactibilidad y economía se muestran por separado. Una celda solo puede ser `prefactible` cuando todos los gates críticos estén verificados.\n\n**Regla de nitratos:** la intersección con una zona vulnerable activa riesgo alto de gestión del digestato y revisión del balance de nitrógeno. No es un veto universal de emplazamiento.\n\n**Fuentes y fecha:** consulta el manifest. Las distancias a gas, carretera o electricidad son proxies y deben contrastarse con capacidad, costes y permisos oficiales.""")

@@ -41,3 +41,20 @@
 - Caveats: weak negatives, 26 Spanish positives, historically reused Spain anchor and 12/31 features with >20 pp missingness shift (four at 99.03% missing in Spain).
 - Next step: commit and push the reproducible evidence; future model work must first harmonize Spanish livestock/manure coverage or obtain independent adjudicated outcomes.
 
+
+### 2026-07-13 22:05
+
+- Objective: add a defensible detailed PDF report for each selected point/cell.
+- Spec: `specs/2026-07-13-point-report-export.md`.
+- Discovery: the app already had a one-page snapshot PDF; the new export will
+  remain separate and backwards compatible.
+- Contract: report screening evidence and unresolved gates, never inferred
+  compliance, viability, permission or connection capacity.
+- Implementation: added a pure semantic report contract, four-section PDF
+  renderer, safe filename helper and a third export button in Streamlit.
+- Validation: visual review of all four pages; real 5 km and 1 km snapshot
+  generation; 52 app tests and 21 model/artifact tests passed; `git diff
+  --check` clean.
+- Result: complete and ready to publish. The v49 score and model artifacts were
+  not modified.
+
