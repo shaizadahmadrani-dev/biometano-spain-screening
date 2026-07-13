@@ -1,6 +1,28 @@
 import json
+from pathlib import Path
 
 from sergio_biometano_app.src.map_view import _aggregate, _spatially_balanced_sample, build_map, status_color
+
+
+def test_public_bundle_contains_all_selectable_map_layers():
+    layers_dir = Path(__file__).parents[1] / "sergio_biometano_app" / "data" / "map_layers"
+    expected = {
+        "built_up_proxy.geojson",
+        "electric_lines.geojson",
+        "feedstock_proxy.geojson",
+        "gas_pipelines.geojson",
+        "high_capacity_roads.geojson",
+        "natura2000_sites.geojson",
+        "nitrate_zones.geojson",
+        "operating_plants.geojson",
+        "substations.geojson",
+    }
+
+    assert {path.name for path in layers_dir.glob("*.geojson")} == expected
+    for name in expected:
+        payload = json.loads((layers_dir / name).read_text(encoding="utf-8"))
+        assert payload["type"] == "FeatureCollection"
+        assert payload["features"], f"{name} must contain at least one feature"
 
 
 def test_mixed_national_bucket_is_review_not_hard_veto():

@@ -23,7 +23,7 @@ pip install -r requirements.txt
 streamlit run sergio_biometano_app/app.py
 ```
 
-The repository includes the compact v49 snapshots required by the app. Internet access is needed for remote base maps and some map layers.
+The repository includes the compact v49 snapshots and the simplified GeoJSON layers required by the app. Internet access is needed for the remote base maps and the official SNCZI flood service.
 
 ## Model benchmark
 
@@ -105,4 +105,3 @@ See [SOURCES.md](SOURCES.md) for source-specific credits and restrictions. In pa
 ## Citation
 
 If this project helps your work, cite the repository URL, version/date and the upstream datasets listed in [SOURCES.md](SOURCES.md).
-
