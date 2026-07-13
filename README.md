@@ -41,11 +41,38 @@ The supervised benchmark compares four classifiers under two readings:
 
 There is **no defensible champion**. Random Forest leads transfer AP, Gradient Boosting leads transfer ROC AUC and Linear SVM retrieves more labelled positives in the top 250. Labels are sparse and unlabeled cells are weak negatives, not verified true negatives.
 
+### Spatial validation v5
+
+The follow-up benchmark uses 100 km EPSG:3035 groups, 4 outer folds and 3
+inner folds on France/Italy. Spain is excluded from family selection,
+hyperparameter selection and missing-indicator selection.
+
+| Model | Nested spatial CV AP | Spain AP | Spain ROC AUC | Positives in top 250 |
+| --- | ---: | ---: | ---: | ---: |
+| Logistic Regression | 0.0763 | 0.0070 | 0.7801 | 4 |
+| Linear SVM | 0.0752 | 0.0082 | 0.7984 | 4 |
+| Random Forest | 0.0943 | 0.0157 | 0.6595 | 2 |
+| Gradient Boosting | 0.0886 | 0.0090 | 0.8032 | 4 |
+
+Random Forest was preselected only from FR/IT spatial CV, but it failed the
+locked Spain transfer gate: its AP gain was not materially large, the 95%
+bootstrap lower bound did not exceed v4 and top-250 capture fell from 6 to 2.
+It was **not promoted to the app**. The audit also found 12/31 features with a
+missingness shift above 20 percentage points and four livestock/manure
+features missing in 99.03% of the Spanish-domain cells. Probability calibration
+and a decisional threshold remain blocked because there are no confirmed
+negatives. See [the v5 report](docs/model_benchmark_v5_report.md).
+
 The fitted benchmark bundle is included at:
 
 ```text
 models/benchmark_classifiers_mediterranean_proxy_v4.joblib
 ```
+
+The spatially validated but **rejected-for-deployment** v5 bundle is retained
+for reproducibility at
+`models/benchmark_classifiers_mediterranean_proxy_v5.joblib`. Its metadata
+marks the score as ranking-only, calibration as blocked and promotion as false.
 
 Only load Joblib/Pickle artifacts from a trusted source. See [SECURITY.md](SECURITY.md).
 
@@ -56,6 +83,13 @@ The portable training entry point is:
 ```bash
 pip install -r requirements-model.txt
 python scripts/train_benchmark.py
+```
+
+The stricter spatial benchmark is run separately so the deployment environment
+does not need scikit-learn:
+
+```bash
+python -m scripts.train_spatial_benchmark --input path/to/biometano_grid5km_curated_v4_attributes.parquet
 ```
 
 The curated training feature table is intentionally **not redistributed** because one of its inputs, WorldClim, does not permit redistribution without prior permission. The expected schema and preparation note are in [data/modeling/README.md](data/modeling/README.md).

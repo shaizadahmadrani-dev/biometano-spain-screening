@@ -39,6 +39,8 @@
     "primary_country",
     "is_land_cell",
     "is_spain",
+    "X_LLC",
+    "Y_LLC",
     "label_tier_mediterranean_v4",
     "label_has_operating_biomethane_plant_spain_v3"
   ]

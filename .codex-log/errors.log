@@ -1,0 +1,20 @@
+2026-07-13 20:05 | The existing Streamlit runtime environment does not contain scikit-learn. Use a separate local model-development environment from requirements-model.txt; do not mix training dependencies into the deployment runtime.
+
+### 2026-07-13 20:45:25
+- Expected red test: tests/test_spatial_calibration.py could not import assert_spain_quarantined before the quarantine and eligibility slice was implemented.
+- Validation command: .venv-model Python -m pytest tests/test_spatial_calibration.py -q
+
+
+### 2026-07-13 20:52:41
+- Smoke run was stopped because --quick reduced Random Forest trees but accidentally left Gradient Boosting at full 120/160/220 estimators.
+- Fix: --quick now uses 40/60/80 Gradient Boosting estimators. Full validation grid is unchanged.
+
+
+### 2026-07-13 21:11:04
+- Artifact test found that the v5 Joblib bundle serialized Candidate as `__main__.Candidate` when trained with `python -m`, making it unloadable from pytest or another process.
+- Fix: the bundle now stores candidate metadata as a plain dictionary; the generated artifact was migrated without refitting the unchanged model.
+
+
+### 2026-07-13 21:25:11
+- Expected red tests after adversarial FAIL: bootstrap_average_precision_interval and split_model_cohorts do not exist yet; quarantine, coordinate-only grouping and nested preprocessing fixes are not implemented.
+

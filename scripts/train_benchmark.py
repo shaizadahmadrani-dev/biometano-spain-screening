@@ -18,7 +18,7 @@ from sklearn.svm import LinearSVC
 
 ROOT = Path(__file__).resolve().parents[1]
 PROCESSED = ROOT / "data" / "modeling"
-DOCS = ROOT / "docs" / "generated"
+DOCS = ROOT / "docs"
 MODELS = ROOT / "models"
 INPUT_ATTRS = PROCESSED / "biometano_grid5km_curated_v4_attributes.parquet"
 

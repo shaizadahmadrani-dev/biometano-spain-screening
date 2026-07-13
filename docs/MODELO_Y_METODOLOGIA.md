@@ -53,3 +53,36 @@ La aplicación no declara una celda prefactible hasta verificar todos estos gate
 ## Validación
 
 El ranking histórico obtuvo ROC AUC 0,804 y Average Precision 0,0153 con 24 plantas operativas etiquetadas y sin negativos reales confirmados. Por eso se conserva como señal de ordenación, no como clasificador calibrado de viabilidad.
+
+### Validación espacial v5
+
+Se añadió una validación cruzada espacial anidada sobre Francia e Italia:
+
+- bloques deterministas de 100 km en EPSG:3035;
+- 4 folds externos para estimar estabilidad y 3 internos para hiperparámetros;
+- selección por Average Precision media, con dispersión y mínimo por fold;
+- España completamente fuera de selección hasta la prueba de transferencia;
+- análisis explícito de imputación mediana frente a indicadores de ausencia.
+
+Random Forest obtuvo la mejor AP espacial FR/IT (0,0943) y alcanzó AP 0,0157 y
+ROC AUC 0,6595 en España. Aunque la AP puntual supera v4 un 15,4% relativo, no
+alcanza el efecto mínimo absoluto de 0,005, el límite inferior bootstrap del
+95% queda por debajo de v4 y el top-250 cae de 6 a 2 positivos. Por eso **no se
+incorporó a la aplicación**. Tampoco se elige retrospectivamente otro modelo
+mirando España.
+
+El análisis de calidad encontró 12 de 31 variables con diferencias de
+missingness superiores a 20 puntos porcentuales. Las dos variables de estiércol
+y las variables bovina y avícola faltan en el 99,03% del dominio español; unas
+pocas celdas fronterizas no equivalen a cobertura nacional. Antes de volver a
+entrenar conviene armonizar estas fuentes o definir un conjunto común de
+cobertura.
+
+### Calibración
+
+No se publica una probabilidad calibrada. Las celdas sin planta conocida son
+negativos débiles, no fracasos o emplazamientos inviables confirmados. Sin una
+muestra adjudicada que contenga positivos y negativos, Brier, log loss,
+isotónica o Platt sólo darían una apariencia de precisión. Los cortes top-k se
+mantienen como diagnóstico de capacidad de revisión, nunca como umbral de
+construir/no construir.

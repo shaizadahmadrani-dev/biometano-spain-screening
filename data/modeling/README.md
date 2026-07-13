@@ -20,9 +20,14 @@ The benchmark also expects these control columns:
 - `primary_country`
 - `is_land_cell`
 - `is_spain`
+- `X_LLC`
+- `Y_LLC`
 - `label_tier_mediterranean_v4`
 - `label_has_operating_biomethane_plant_spain_v3`
 
+`X_LLC` and `Y_LLC` are the lower-left EPSG:3035 coordinates used to build
+deterministic 100 km spatial groups. They prevent neighbouring cells from being
+split casually between model-selection folds.
+
 Do not interpret unlabeled cells as verified unsuitable sites. They are weak negatives
 used for ranking experiments.
-

@@ -8,6 +8,7 @@ __pycache__/
 .coverage
 htmlcov/
 *.log
+!.codex-log/errors.log
 *.pid
 .env
 .env.*
@@ -23,4 +24,3 @@ data/modeling/*.parquet
 data/modeling/*.csv
 !data/modeling/README.md
 !data/modeling/model_features.json
-
